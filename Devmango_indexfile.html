@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DevMango: Ebony Rush Web Developer</title>
+  <script src="https://s3.amazonaws.com/devmango.com/aws-sdk.min.js"></script>
+      <script type="text/javascript">
+          var LPAWS = {};
+
+          // Initialize the Amazon Cognito credentials provider
+          AWS.config.region = 'us-east-1'; // Region
+          AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+              IdentityPoolId: 'us-east-1:5643eae7-f899-475e-b417-5e2ca904d19b',
+          });
+
+          LPAWS.sendToTopic = function() {
+              var sns = new AWS.SNS();
+              var params = {
+                  //Message: 'Hello topic', /* required */
+                  Message: document.querySelector('#input-msg').value,
+                  //document.querySelectorAll('#input-msg','#email','#name')
+                  Subject: 'Browser SNS publish - contact form',
+                  TopicArn: 'arn:aws:sns:us-east-1:896861755957:com-website-contact-form'
+              };
+              sns.publish(params, function(err, data) {
+                  if (err) console.log(err, err.stack); // an error occurred
+                  else     console.log(data);           // successful response
+              });
+          };
+      </script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<style>
+
+
+/*
+@font-face{
+    font-family: "Acknowledgement";
+    src: url('Acknowledgement.otf'),
+    url('Acknowledgement.eot'); /* IE
+}
+@font-face { font-family: Quicksand; src: url('Quicksand-Light.otf'); }*/
+@font-face {
+   font-family: BebasNeue;
+   src: url('BebasNeue Regular.otf');
+}
+@font-face {
+   font-family: BebasNeue Bold;
+   src: url('BebasNeue Bold.otf');
+}
+
+* {
+   font-family: BebasNeue;
+}
+
+html{
+  font-family: BebasNeue;
+}
+
+h1{
+  font-family: BebasNeue Bold;
+}
+
+h2, h4{
+  font-family: BebasNeue Bold;
+}
+
+h3{
+  font-family: BebasNeue Bold;
+}
+
+
+/*profile pic*/
+.profile {
+    border-radius: 50%;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+/* social media icon colors*/
+.fa-cog {
+  color: black;
+
+}
+.row {
+    display: flex;
+}
+
+
+
+/* Create three equal columns that sits next to each other */
+.column {
+    flex: 33.33%;
+    padding: 5px;
+}
+
+
+.header, .footer {
+    background-color: #85bfbc;
+    color: white;
+    padding: 15px;
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: white;
+    font-family: Acknowledgement;
+}
+
+.navbar a {
+    float: left;
+    font-size: 30px;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.dropdown {
+    float: center;
+    overflow: hidden;
+}
+
+.dropdown .dropbtn {
+    cursor: pointer;
+    font-family: Acknowledgement;
+    font-size: 30px;
+    border: none;
+    outline: none;
+    color: black;
+    padding: 14px 16px;
+    background-color: inherit;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
+    background-color: white;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: grey;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+
+.show {
+    display: block;
+}
+
+h1 {
+  color: white;
+  /*font-family: Acknowledgement;*/
+  font-size: 400%;
+  /*background-color:blue;*/
+  text-align: center;
+}
+
+h2 {
+  color: black;
+  text-align:center
+}
+
+h4 {
+  color: white;
+  text-align:center
+}
+
+
+
+/*.column {
+    /*float: left;
+    padding: 10px;
+}
+
+/* Left and right column */
+.column.side {
+    width: 100%;
+}
+
+/* Middle column */
+.column.middle {
+    width: 100%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+header{
+  background-image: url("mangobackground.jpg");
+  background-size:     cover;                      /* <------ */
+  background-repeat:   no-repeat;
+  background-position: center center;
+}
+footer {
+  text-align: center;
+  padding: 10px;
+}
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media (max-width: 600px) {
+    .column.side, .column.middle {
+        width: 100%;
+    }
+    }
+.myBox {
+border: none;
+padding: 5px;
+width: 600px;
+height: 450px;
+overflow: scroll;
+}
+
+.boxed {
+  background-color: white;
+  width: 50px;
+  border: 05px solid #B2E2D9;
+  padding: 25px;
+  margin: 25px;
+  float:none;
+  text-align: center;
+}
+
+.center {
+    margin: auto;
+    width: 40%;
+    border: 3px solid #B2E2D9;
+    padding: 10px;
+}
+img {
+    width:15%;
+    height: auto;
+    float: none;
+}
+
+div.a {
+    text-align: center;
+}
+/* Style the navbar */
+#navbar {
+  background-color: #FFFFFF;
+  text-align: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 10000;
+  cursor: default;
+}
+
+/* Navbar links */
+#navbar a {
+  width:200px; /* fixed width */
+  display: inline-block;
+  color: #FF8C00;
+  text-align: center;
+  padding: 15px;
+  text-decoration: none;
+}
+
+#navbar a:hover {
+  border-bottom: 3px solid orange;
+}
+
+a.ex5:visited, a.ex5:link {text-decoration: none;}
+a.ex5:hover, a.ex5:active {text-decoration: underline;}
+
+#navbar a.active {
+  border-bottom: 3px solid orange;
+}
+
+/* Page content */
+.content {
+  padding: 16px;
+}
+
+/* The sticky class is added to the navbar with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+  padding-top: 60px;
+}
+
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+input[type=button] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.container {
+    /*height: 50%;
+    width: 50%;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;*/
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+    text-align: left;
+
+}
+div.polaroid {
+  width: 20%;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 25px;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+div.container {
+  text-align: center;
+  padding: 10px 20px;
+}
+
+</style>
+<body>
+  <div id="top"></div>
+
+  <div id="navbar">
+    <a href="#top">About Me</a>
+    <a href="#Section2">What I Do</a>
+    <a href="#Section3">Portfolio</a>
+    <a href="#Section4">Contact</a>
+  </div>
+<!--
+<div class="navbar">
+  <a href="#home">About</a>
+  <a href="#news">Gallery</a>
+  <div class="dropdown">
+    <button class="dropbtn" onclick="myFunction()">Links
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content" id="myDropdown">
+      <a href="#">Link 1</a>
+      <a href="#">Link 2</a>
+      <a href="#">Link 3</a>
+    </div>
+  </div>
+</div>
+-->
+<!---<div class="row">-->
+
+      <header>
+        <div class="w3-container a">
+            <h2>About</h2>
+            <h1>DevMango</h1>
+            <div class="polaroid">
+              <img src="Profile_Pic.jpg" alt="profile pic: Ebony Rush" style="width:100%">
+              <div class="container">
+                <p>Dev</p>
+              </div>
+            </div>
+            <h4>My name is Ebony Rush and I am a Web Developer</h4>
+            <p></p>
+            <div>
+              <i class="fa-cog fab fa-facebook fa-2x"></i>
+              <i class="fa-cog fab fa-linkedin fa-2x"> </i>
+              <i class="fa-cog fab fa-instagram fa-2x"></i>
+            </div>
+            <hr>
+      </header>
+      </div>
+      <div id="Section2">
+        <div class="w3-container">
+            <h2>What I Do</h2>
+            <br>
+            <div class="a">
+              <h3>Build AWS Websites</h3>
+            <br>
+                <img src="aws_symbol.png"/>
+            <br>
+              <h3>Salesforce Sales Cloud Configuration</h3>
+            <br>
+                <img src="Salesforce_Logo.png"/>
+            </div>
+
+          <hr>
+        </div>
+      </div>
+      <div id="Section3">
+        <div class="w3-container">
+            <h2>Portfolio</h2>
+            <div class="a">
+              <h3>Coming Soon</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div id="Section4">
+          <h2>Contact</h2>
+          <div class="container">
+                <form>
+
+                    <label for="name"> Name:</label>
+                    <input type="text" id="name" name="name"/>
+
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" name="email"/>
+
+                    <label for="message">Message:</label>
+                    <input type="text" id="input-msg" name="message" placeholder="Text.." style="height:200px"/>
+
+                    <button onclick="LPAWS.sendToTopic(); return false;">Submit</button>
+                </form>
+          </div>
+          <!--<form>
+        <input type="text" name="msg" id="input-msg"/>
+        <button onclick="LPAWS.sendToTopic(); return false;">Send to SNS topic</button>
+    </form>-->
+   </div>
+<footer>
+  <p>devmango</p>
+</footer>
+</body>
+<script>
+// When the user scrolls the page, execute myFunction
+window.onscroll = function() {myFunction()};
+
+// Get the navbar
+var navbar = document.getElementById("navbar");
+
+// Get the offset position of the navbar
+var sticky = navbar.offsetTop;
+
+// Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+
+/*function submitToAPI(e) {
+       e.preventDefault();
+       var URL = "https://p6lu4jkzic.execute-api.us-east-1.amazonaws.com/001/contact-us";
+
+            var Namere = /[A-Za-z]{1}[A-Za-z]/;
+            if (!Namere.test($("#name-input").val())) {
+                         alert ("Name can not less than 2 char");
+                return;
+            }
+            var mobilere = /[0-9]{10}/;
+            if (!mobilere.test($("#phone-input").val())) {
+                alert ("Please enter valid mobile number");
+                return;
+            }
+            if ($("#email-input").val()=="") {
+                alert ("Please enter your email id");
+                return;
+            }
+
+            var reeamil = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,6})?$/;
+            if (!reeamil.test($("#email-input").val())) {
+                alert ("Please enter valid email address");
+                return;
+            }
+
+       var name = $("#name-input").val();
+       var phone = $("#phone-input").val();
+       var email = $("#email-input").val();
+       var desc = $("#description-input").val();
+       var data = {
+          name : name,
+          phone : phone,
+          email : email,
+          desc : desc
+        };
+
+       $.ajax({
+         type: "POST",
+         url : "https://abc1234.execute-api.us-east-1.amazonaws.com/01/contact",
+         dataType: "json",
+         crossDomain: "true",
+         contentType: "application/json; charset=utf-8",
+         data: JSON.stringify(data),
+
+
+         success: function () {
+           // clear form and show a success message
+           alert("Successfull");
+           document.getElementById("contact-form").reset();
+       location.reload();
+         },
+         error: function () {
+           // show an error message
+           alert("UnSuccessfull");
+         }});
+     }
+
+/* Demo purposes only */
+
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropbtn')) {
+    var myDropdown = document.getElementById("myDropdown");
+      if (myDropdown.classList.contains('show')) {
+        myDropdown.classList.remove('show');
+      }
+  }
+}
+*/
+
+</script>
+</body>
+</html>
